@@ -1,0 +1,29 @@
+    {% extends "layout.html" %}
+    {% block body %}
+    <form action="{{ url_for('play_workout', wid=wid, eid=eid, count=count) }}" method="post">
+        <ul data-role="listview" data-inset="true">
+            <h4>{{ exercise.title }}</h4>
+
+            <p>{{ exercise.comment|safe }}</p>
+            <li class="ui-field-contain">
+                <label for="sets">Sets:</label>
+                <input type="range" name="sets" id="sets" value="{{ exercise.sets }}" min="1" max="15" data-highlight="true" required="">
+            </li>
+            <li class="ui-field-contain">
+                <label for="reps">Reps:</label>
+                <input type="range" name="reps" id="reps" value="{{ exercise.reps }}" min="1" max="35" data-highlight="true" required="">
+            </li>
+            <li class="ui-field-contain">
+                <label for="weight">Weight:</label>
+                <input type="range" name="weight" id="weight" value="{{ last_weight }}" min="1" max="200" step ="0.25" data-highlight="true" required="">
+            </li>
+            <li class="ui-body ui-body-b">
+                <fieldset class="ui-grid">
+                    <div class="ui-block">
+                        <button type="submit" class="ui-btn ui-corner-all ui-btn-a">Next Exercise!</button>
+                    </div>
+                </fieldset>
+            </li>
+        </ul>
+    </form>
+    {% endblock %}

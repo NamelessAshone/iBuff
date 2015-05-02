@@ -1,0 +1,52 @@
+    {% extends "layout.html" %}
+    {% block body %}
+    {% for entry in workouts %}
+    <ul data-role="listview" data-split-icon="delete" data-split-theme="a" data-inset="true">
+        <li><a href="{{ url_for('show_workout', wid=entry.id) }}">
+            <h2>{{ entry.title }}</h2>
+
+            <p>{{ entry.comment|safe }}</p></a>
+            <a href="#deleteWorkout{{ entry.id }}" data-rel="popup" data-position-to="window" data-transition="pop">Delete</a>
+        </li>
+    </ul>
+    <div data-role="popup" id="deleteWorkout{{ entry.id }}" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
+        <h3>Are you sure?</h3>
+        <h5>This can't be un-done.</h5>
+        <a href="{{ url_for('delete_workout', wid=entry.id) }}" class="ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-btn-inline ui-mini">Yes, delete!</a>
+        <a href="#" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-mini">Cancel</a>
+    </div>
+    {% else %}
+    <ul data-role="listview" data-inset="true">
+        <li>
+            <h2>Unbelievable.</h2>
+
+            <p>No workouts here so far, you can add some below!</p>
+        </li>
+    </ul>
+    {% endfor %}
+    <div data-role="collapsible">
+        <h4>Add Workout</h4>
+        <form action="{{ url_for('add_workout') }}" method="post">
+            <ul data-role="listview" data-inset="true">
+                <li class="ui-field-contain">
+                    <label for="title">Workout name:</label>
+                    <input type="text" name="title" id="title" value="" data-clear-btn="true" required="">
+                </li>
+                <li class="ui-field-contain">
+                    <label for="comment">Comment:</label>
+                    <textarea cols="40" rows="8" name="comment" id="comment"></textarea>
+                </li>
+                <li class="ui-body ui-body-b">
+                    <fieldset class="ui-grid-a">
+                        <div class="ui-block-a">
+                            <button type="reset" class="ui-btn ui-corner-all ui-btn-a">Reset</button>
+                        </div>
+                        <div class="ui-block-b">
+                            <button type="submit" class="ui-btn ui-corner-all ui-btn-a">Submit</button>
+                        </div>
+                    </fieldset>
+                </li>
+            </ul>
+        </form>
+    </div>
+    {% endblock %}

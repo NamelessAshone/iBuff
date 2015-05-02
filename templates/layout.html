@@ -1,0 +1,47 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>iBuff</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='white.min.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='jquery.mobile.icons.min.css') }}"/>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css"/>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+<div data-role="page">
+    <div data-role="header">
+        <div data-role="header">
+            <a href="javascript:history.back()" data-icon="back">Back</a>
+            <h1><a href="{{ url_for('show_workouts') }}">iBuff</a></h1>
+            {% if not session.logged_in %}
+            <a href="{{ url_for('login') }}" data-icon="lock">Log in</a>
+            {% else %}
+            <a href="{{ url_for('logout') }}" data-icon="user">Log out</a>
+            {% endif %}
+        </div>
+        {% for message in get_flashed_messages() %}
+        <div class="ui-bar ui-bar-b" style="text-align: center">
+            <h4>{{ message }}</h4>
+        </div>
+        {% endfor %}
+    </div>
+    <!-- /header -->
+
+    <div data-role="content">
+        {% block body %}{% endblock %}
+    </div>
+    <!-- /content -->
+
+    <div data-role="footer">
+        <h4>Made by <a href="mailto:joel@jkaberg.com">Joel Kaberg</a>, <a href="https://jkaberg.com/">jkaberg.com</a></h4>
+    </div>
+    <!-- /footer -->
+
+</div>
+<!-- /page -->
+</body>
+</html>

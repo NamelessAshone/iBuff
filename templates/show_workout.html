@@ -1,0 +1,69 @@
+    {% extends "layout.html" %}
+    {% block body %}
+    <ul data-role="listview" data-inset="true">
+        <li>
+            <h2>{{ workout.title }}.</h2>
+            <p>{{ workout.comment }}</p>
+        </li>
+    </ul>
+    {% if exercises %}
+    <a href="{{ url_for('play_workout', wid=wid, eid=eid, count=0) }}" class="ui-btn ui-corner-all">Do this workout!</a>
+    {% endif %}
+    {% for entry in exercises %}
+    <ul data-role="listview" data-split-icon="delete" data-split-theme="a" data-inset="true">
+        <li><a href="{{ url_for('show_exercise', wid=wid, eid=entry.id) }}">
+            <h2>{{ entry.title }}</h2>
+
+            <p>{{ entry.comment|safe }}</p>
+
+            <p><b>Sets</b>: {{ entry.sets }} - <b>Repetitions</b>: {{ entry.reps }}</p></a>
+            <a href="#deleteExercise{{ entry.id }}" data-rel="popup" data-position-to="window" data-transition="pop">Delete</a>
+        </li>
+    </ul>
+    <div data-role="popup" id="deleteExercise{{ entry.id }}" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
+        <h3>Are you sure?</h3>
+        <h5>This can't be un-done.</h5>
+
+        <a href="{{ url_for('delete_exercise', eid=entry.id, wid=wid) }}" class="ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-btn-inline ui-mini">Yes, delete!</a>
+        <a href="#" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-mini">Cancel</a>
+    </div>
+    {% else %}
+    <ul data-role="listview" data-inset="true">
+        <li>
+            <h2>Unbelievable.</h2>
+
+            <p>No exercises here so far, you can add some below!</p>
+        </li>
+    </ul>
+    {% endfor %}
+    <div data-role="collapsible">
+        <h4>Add Exercise</h4>
+        <form action="{{ url_for('add_exercise', wid=wid) }}" method="post">
+            <ul data-role="listview" data-inset="true">
+                <li class="ui-field-contain">
+                    <label for="title">Exercise name:</label>
+                    <input type="text" name="title" id="title" value="" data-clear-btn="true" required="">
+                </li>
+                <li class="ui-field-contain">
+                    <label for="comment">Comment:</label>
+                    <textarea cols="40" rows="8" name="comment" id="comment"></textarea>
+                </li>
+                <li class="ui-field-contain">
+                    <label for="sets">Sets:</label>
+                    <input type="range" name="sets" id="sets" value="1" min="1" max="15" data-highlight="true" required="">
+                </li>
+                <li class="ui-field-contain">
+                    <label for="reps">Reps:</label>
+                    <input type="range" name="reps" id="reps" value="1" min="1" max="35" data-highlight="true" required="">
+                </li>
+                <li class="ui-body ui-body-b">
+                    <fieldset class="ui-grid">
+                        <div class="ui-block">
+                            <button type="submit" class="ui-btn ui-corner-all ui-btn-a">Add</button>
+                        </div>
+                    </fieldset>
+                </li>
+            </ul>
+        </form>
+    </div>
+    {% endblock %}

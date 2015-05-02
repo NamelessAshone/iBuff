@@ -1,0 +1,29 @@
+    {% extends "layout.html" %}
+    {% block body %}
+    <form action="{{ url_for('update_exercise', wid=wid, eid=exercise.id) }}" method="post">
+        <ul data-role="listview" data-inset="true">
+            <li class="ui-field-contain">
+                <label for="title">Workout name:</label>
+                <input type="text" name="title" id="title" value="{{ exercise.title }}" data-clear-btn="true" required="">
+            </li>
+            <li class="ui-field-contain">
+                <label for="comment">Comment:</label>
+                <textarea cols="40" rows="8" name="comment" id="comment">{{ exercise.comment|safe }}</textarea>
+            </li>
+            <li class="ui-field-contain">
+                <label for="sets">Sets:</label>
+                <input type="range" name="sets" id="sets" value="{{ exercise.sets }}" min="1" max="15" data-highlight="true" required="">
+            </li>
+            <li class="ui-field-contain">
+                <label for="reps">Reps:</label>
+                <input type="range" name="reps" id="reps" value="{{ exercise.reps }}" min="1" max="35" data-highlight="true" required="">
+            <li class="ui-body ui-body-b">
+                <fieldset class="ui-grid">
+                    <div class="ui-block">
+                        <button type="submit" class="ui-btn ui-corner-all ui-btn-a">Update</button>
+                    </div>
+                </fieldset>
+            </li>
+        </ul>
+    </form>
+    {% endblock %}
