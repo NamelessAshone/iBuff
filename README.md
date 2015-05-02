@@ -17,11 +17,13 @@ Install supervisor and git
 Clone the repo
 
 > cd /opt
+>
 > git clone https://github.com/jkaberg/iBuff.git
 
 Install requirements (current Flask package in ubuntu repos is outdated)
 
 > cd ibuff
+>
 > sudo pip install https://github.com/mitsuhiko/flask/tarball/master
 
 Initialize the database
@@ -39,15 +41,21 @@ Create a supervisor config file
 Paste the following
 
 > [program:ibuff]
+>
 > command=/opt/ibuff/main.py
+>
 > autostart=true
+>
 > autorestart=true
+>
 > stderr_logfile=/var/log/ibuff.err.log
+>
 > stdout_logfile=/var/log/ibuff.out.log
 
 Tell supervisor to update and enact changes
 
 > supervisorctl reread
+>
 > supervisorctl update
 
 For more information on Supervisor: http://supervisord.org/
